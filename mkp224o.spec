@@ -31,12 +31,14 @@ proposal 224) onion addresses.
 %autosetup
 
 %build
+# autogen.sh will generate a configure script if missing
 %if %{with autogen}
 ./autogen.sh
 %endif
 CFLAGS='%{build_cflags} -Wa,--noexecstack'
 CXXFLAGS='%{build_cxxflags} -Wa,--noexecstack'
 LDFLAGS='%{build_ldflags} -Wl,-z,noexecstack'
+# Reference: OPTIMIZATION.txt
 %ifarch %{x86_64}
 %configure --enable-amd64-51-30k
 %else
