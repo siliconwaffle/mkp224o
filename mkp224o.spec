@@ -34,10 +34,13 @@ proposal 224) onion addresses.
 %if %{with autogen}
 ./autogen.sh
 %endif
+CFLAGS='%{build_cflags} -Wa,--noexecstack'
+CXXFLAGS='%{build_cxxflags} -Wa,--noexecstack'
+LDFLAGS='%{build_ldflags} -Wl,-z,noexecstack'
 %ifarch %{x86_64}
 %configure --enable-amd64-51-30k
 %else
-%configure
+%configure --enable-donna
 %endif
 %make_build
 
@@ -50,5 +53,5 @@ install -Dm 755 %{name} %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
-* Sat Feb 10 2024 Release <siliconwaffle@trilbyproject.org> - 1.7.0-1
+* Sat Mar 16 2024 Release <siliconwaffle@trilbyproject.org> - 1.7.0-1
 - Initial RPM Release
